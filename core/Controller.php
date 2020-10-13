@@ -39,4 +39,15 @@ abstract class Controller
         $this->meta['description'] = $description;
         $this->meta['keywords'] = $keywords;
     }
+
+    public function redirect($url = false)
+    {
+        if ($url) {
+            $redirectPath = $url;
+        } else {
+            $redirectPath = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH;
+        }
+        header("Location: $redirectPath");
+        exit;
+    }
 }

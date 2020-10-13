@@ -1,30 +1,22 @@
  <div class="container">
+     <?= $_GET['id']; ?>
         <div class="row mb-5">
             <div class="card-deck">
+                <?php foreach ($tasks as $task) { ?>
                 <div class="card">
-                    <h5 class="card-header">Featured</h5>
+                    <h5 class="card-header"><?= $task['user_name']; ?></h5>
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h6 class="card-title"><?= $task['user_email']; ?></h6>
+                        <p class="card-text"><?= $task['task_description']; ?></p>
+                        <?php if ($task['status']) { ?>
+                            <p><span class="badge badge-success">Выполнено</span></p>
+                        <?php } else { ?>
+                            <p><span class="badge badge-warning">В процессе</span></p>
+                        <?php } ?>
+                        <a href="?id=<?= $task['id']; ?>" class="btn btn-primary">Смотреть</a>
                     </div>
                 </div>
-                <div class="card">
-                    <h5 class="card-header">Featured</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <h5 class="card-header">Featured</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
         <div class="row d-flex justify-content-center">

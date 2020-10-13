@@ -3,6 +3,9 @@
 use core\Router;
 
 
+Router::addRoute('^add$', ['controller' => 'Main',
+    'action' => 'add']);
+
 Router::addRoute('^admin$', ['controller' => 'Main',
     'action' => 'index', 'prefix' => 'admin']);
 Router::addRoute('^admin/?(?P<controller>[a-z-]+)/?(?P<action>[a-z-]+)?$',

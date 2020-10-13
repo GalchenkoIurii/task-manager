@@ -18,7 +18,8 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Авторизоваться</a></li>
+                        <li><a href="#" class="btn btn-primary" role="button">Авторизоваться</a></li>
+                        <li><a href="add" class="btn btn-primary mt-3" role="button">Добавить задачу</a></li>
                     </ul>
                 </div>
             </div>

@@ -1,6 +1,5 @@
 <?php
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-require_once dirname(__DIR__) . '/config/routes.php';
+require_once dirname(__DIR__) . '/config/init.php';
 
 new \core\App();
