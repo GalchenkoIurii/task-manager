@@ -19,21 +19,4 @@
                 <?php } ?>
             </div>
         </div>
-        <div class="row d-flex justify-content-center">
-            <form class="w-50 text-center">
-                <div class="form-group">
-                    <label for="name">Имя</label>
-                    <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="task">Текст задачи</label>
-                    <textarea class="form-control" id="task" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Добавить задачу</button>
-            </form>
-        </div>
-    </div>
+ </div>

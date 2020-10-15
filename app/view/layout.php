@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
-                    <h4 class="text-white">Task Manager</h4>
+                    <h4><a href="<?= PATH; ?>" class="text-white">Task Manager</a></h4>
                     <p class="text-muted">Test web app</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
