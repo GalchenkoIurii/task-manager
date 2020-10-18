@@ -4,6 +4,7 @@ namespace app\controller;
 
 
 use app\model\TaskModel;
+use app\model\UserModel;
 use core\Controller;
 use core\Pagination;
 
@@ -11,6 +12,7 @@ class MainController extends Controller
 {
     public function indexAction()
     {
+        $user = $this->user;
         $taskModel = new TaskModel();
 
         $page = isset($_GET['page']) ? (int)htmlspecialchars($_GET['page']) : 1;
@@ -21,7 +23,7 @@ class MainController extends Controller
         $tasks = $taskModel->getItems($startPage, $itemsPerPage);
 
         $this->setMeta('Home page | Task manager', 'Task manager app', 'task, manager');
-        $this->setData(compact('tasks', 'pagination'));
+        $this->setData(compact('tasks', 'pagination', 'user'));
     }
 
     public function addAction()
@@ -49,5 +51,40 @@ class MainController extends Controller
                     : $this->setData(compact('dbErrorMessage'));
             }
         }
+    }
+
+    public function loginAction()
+    {
+        $errorMessage = '';
+        if (!empty($_POST)) {
+            $userName = (trim(htmlspecialchars($_POST['user_name']))) ?: null;
+            $password = (trim(htmlspecialchars($_POST['password']))) ?: null;
+
+            if ($userName && $password) {
+                $user = new UserModel();
+                $userData = $user->getUserByName($userName);
+
+                if ($userData) {
+                    if ($userData->password === md5($password)) {
+                        $_SESSION['user']['name'] = $userData->user_name;
+                        $this->redirect('/');
+                    }
+                } else {
+                    //$_SESSION['error_login'] = 'Логин или пароль введены неверно';
+                    $errorMessage = 'Логин или пароль введены неверно';
+                }
+            }
+        }
+        $this->setData(compact('errorMessage'));
+        $this->setMeta('Вход');
+    }
+
+    public function logoutAction()
+    {
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+            unset($this->user);
+        }
+        $this->redirect('/');
     }
 }

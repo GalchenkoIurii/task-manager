@@ -18,7 +18,12 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <ul class="list-unstyled">
-                        <li><a href="#" class="btn btn-primary" role="button">Авторизоваться</a></li>
+                        <?php if (!empty($user)) { ?>
+                            <li class="mb-3"><span class="text-white"><?= $user['name']; ?></span></li>
+                            <li><a href="logout" class="btn btn-primary" role="button">Выйти</a></li>
+                        <?php } else { ?>
+                            <li><a href="login" class="btn btn-primary" role="button">Авторизоваться</a></li>
+                        <?php } ?>
                         <li><a href="add" class="btn btn-primary mt-3" role="button">Добавить задачу</a></li>
                     </ul>
                 </div>

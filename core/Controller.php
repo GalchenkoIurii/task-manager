@@ -12,6 +12,7 @@ abstract class Controller
     public $prefix;
     public $data = [];
     public $meta = ['title' => '', 'description' => '', 'keywords' => ''];
+    public $user = [];
 
     public function __construct($route)
     {
@@ -20,6 +21,9 @@ abstract class Controller
         $this->model = $route['controller'];
         $this->view = $route['action'];
         $this->prefix = $route['prefix'];
+        if (isset($_SESSION['user']['name'])) {
+            $this->user['name'] = $_SESSION['user']['name'];
+        }
     }
 
     public function getView()
