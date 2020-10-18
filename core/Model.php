@@ -18,9 +18,9 @@ abstract class Model
         $this->db = $dbInstance->getDbConnection();
     }
 
-    public function getAllData($limit = 0)
+    public function getItems($offset, $limit)
     {
-        $query = ($limit) ? "SELECT * FROM $this->table LIMIT $limit" : "SELECT * FROM $this->table";
+        $query = "SELECT * FROM $this->table LIMIT $offset, $limit";
         return $this->db->query($query)->fetchAll();
     }
 
@@ -29,6 +29,7 @@ abstract class Model
         $query = "SELECT COUNT(*) AS count FROM $this->table";
         $statement = $this->db->prepare($query);
         $statement->execute();
-        return $statement->fetch(\PDO::FETCH_OBJ);
+        $result = $statement->fetch(\PDO::FETCH_OBJ);
+        return $result->count;
     }
 }

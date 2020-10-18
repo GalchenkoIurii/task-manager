@@ -12,16 +12,16 @@ class MainController extends Controller
     public function indexAction()
     {
         $taskModel = new TaskModel();
-        $tasks = $taskModel->getAllData();
-        print_r($tasks);
 
         $page = isset($_GET['page']) ? (int)htmlspecialchars($_GET['page']) : 1;
         $itemsPerPage = 3;
         $tasksCount = (int)$taskModel->getTotalItemsCount();
         $pagination = new Pagination($itemsPerPage, $tasksCount, $page);
+        $startPage = $pagination->getStart();
+        $tasks = $taskModel->getItems($startPage, $itemsPerPage);
 
         $this->setMeta('Home page | Task manager', 'Task manager app', 'task, manager');
-        $this->setData(compact('tasks'));
+        $this->setData(compact('tasks', 'pagination'));
     }
 
     public function addAction()

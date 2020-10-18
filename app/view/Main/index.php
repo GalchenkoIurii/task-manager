@@ -1,5 +1,4 @@
  <div class="container">
-     <?= $_GET['id']; ?>
         <div class="row mb-5">
             <div class="card-deck">
                 <?php foreach ($tasks as $task) { ?>
@@ -19,4 +18,13 @@
                 <?php } ?>
             </div>
         </div>
+     <div class="row mb-5 justify-content-center">
+         <?php if ($pagination->pagesCount > 1) { ?>
+             <nav>
+                 <ul class="pagination">
+                     <?= $pagination; ?>
+                 </ul>
+             </nav>
+         <?php } ?>
+     </div>
  </div>

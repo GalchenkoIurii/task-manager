@@ -21,6 +21,38 @@ class Pagination
         var_dump($this->uri);
     }
 
+    public function __toString()
+    {
+        return $this->getHTML();
+    }
+
+    public function getHTML()
+    {
+        $backLink = null;
+        $forwardLink = null;
+        $startPageLink = null;
+        $endPageLink = null;
+
+        if ($this->currentPage > 1) {
+            $backLink = "<li class='page-item'><a class='page-link' href='{$this->uri}page="
+                . ($this->currentPage - 1) . "'>&lt;</a></li>";
+        }
+        if ($this->currentPage < $this->pagesCount) {
+            $forwardLink = "<li class='page-item'><a class='page-link' href='{$this->uri}page="
+                . ($this->currentPage + 1) . "'>&gt;</a></li>";
+        }
+        if ($this->currentPage > 3) {
+            $startPageLink = "<li class='page-item'><a class='page-link' href='{$this->uri}page=1'>В начало</a></li>";
+        }
+        if ($this->currentPage < ($this->pagesCount - 2)) {
+            $endPageLink = "<li class='page-item'><a class='page-link' href='{$this->uri}page="
+                . "{$this->pagesCount}'>В конец</a></li>";
+        }
+
+        return $startPageLink . $backLink . "<li class='page-item active' aria-current='page'><span class='page-link'>"
+            . $this->currentPage . "<span class='sr-only'>(current)</span></span></li>" . $forwardLink . $endPageLink;
+    }
+
     public function getPagesCount()
     {
         return ceil($this->itemsTotal / $this->itemsPerPage) ?: 1;
