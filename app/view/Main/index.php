@@ -46,12 +46,19 @@
                     <div class="card-body">
                         <h6 class="card-title"><?= $task['user_email']; ?></h6>
                         <p class="card-text"><?= $task['task_description']; ?></p>
+                    </div>
+                    <div class="card-footer">
                         <?php if ($task['status']) { ?>
-                            <p><span class="badge badge-success">Выполнено</span></p>
+                            <p>Статус: <span class="badge badge-success">Выполнено</span></p>
                         <?php } else { ?>
-                            <p><span class="badge badge-warning">В процессе</span></p>
+                            <p>Статус: <span class="badge badge-warning">В процессе</span></p>
                         <?php } ?>
-                        <a href="?id=<?= $task['id']; ?>" class="btn btn-primary">Смотреть</a>
+                        <?php if ($task['edited'] && $user['name'] === 'admin') { ?>
+                            <span class="badge badge-danger">Отредактировано администратором</span></p>
+                        <?php } ?>
+                        <?php if (!empty($user) && $user['name'] === 'admin') { ?>
+                            <a href="edit?id=<?= $task['id']; ?>" class="btn btn-primary">Редактировать</a>
+                        <?php } ?>
                     </div>
                 </div>
                 <?php } ?>

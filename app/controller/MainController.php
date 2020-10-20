@@ -58,6 +58,10 @@ class MainController extends Controller
         $errorMessages = [];
         $successMessage = 'Задача успешно добавлена';
         $dbErrorMessage = 'Ошибка добавления задачи';
+        $formAction = 'add';
+        $user = $this->user;
+        $this->setData(compact('formAction', 'user'));
+
         if (isset($_POST['addTask'])) {
             if (empty($_POST['name'])) {
                 $errorMessages[] = 'Не заполнено обязательное поле Имя';
@@ -68,14 +72,65 @@ class MainController extends Controller
             }
 
             if (!empty($errorMessages)) {
-                $this->setData(compact('errorMessages'));
+                $this->setData(compact('errorMessages', 'formAction'));
             } else {
                 $name = htmlspecialchars(trim($_POST['name']));
                 $email = htmlspecialchars(trim($_POST['email']));
                 $task = htmlspecialchars(trim($_POST['task']));
                 $taskModel = new TaskModel();
-                ($taskModel->setTask($name, $email, $task)) ? $this->setData(compact('successMessage'))
-                    : $this->setData(compact('dbErrorMessage'));
+                ($taskModel->setTask($name, $email, $task)) ? $this->setData(compact('successMessage', 'formAction'))
+                    : $this->setData(compact('dbErrorMessage', 'formAction'));
+            }
+        }
+    }
+
+    public function editAction()
+    {
+        $errorMessages = [];
+        $successMessage = 'Задача успешно отредактирована';
+        $dbErrorMessage = 'Ошибка редактирования задачи';
+
+        $this->view = 'add';
+
+        $formAction = 'edit';
+        $user = $this->user;
+        $this->setData(compact('formAction', 'user'));
+
+        $taskModel = new TaskModel();
+
+        if (isset($_GET['id']) && !empty($this->user) && $this->user['name'] === 'admin') {
+            $id = (int)htmlspecialchars($_GET['id']);
+            $task = $taskModel->getItem($id);
+            setcookie('taskDescription', $task['task_description'], time() + 600);
+            $this->setData(compact('task', 'formAction', 'user'));
+        }
+
+        if (isset($_POST['addTask'])) {
+            if ($_SESSION['user']['name'] === 'admin') {
+                if (empty($_POST['name'])) {
+                    $errorMessages[] = 'Не заполнено обязательное поле Имя';
+                } elseif (empty($_POST['email'])) {
+                    $errorMessages[] = 'Не заполнено обязательное поле Email';
+                } elseif (empty($_POST['task'])) {
+                    $errorMessages[] = 'Не заполнено обязательное поле Текст задачи';
+                }
+
+                if (!empty($errorMessages)) {
+                    $this->setData(compact('errorMessages', 'formAction', 'user'));
+                } else {
+                    $taskId = (int)htmlspecialchars($_POST['taskId']);
+                    $name = htmlspecialchars(trim($_POST['name']));
+                    $email = htmlspecialchars(trim($_POST['email']));
+                    $task = htmlspecialchars(trim($_POST['task']));
+                    $taskDescription = ($_COOKIE['taskDescription']) ?: null;
+                    setcookie('taskDescription', '', time() - 600);
+                    $status = ($_POST['status']) ? 1 : null;
+                    $edited = ($taskDescription !== $task) ? 1 : null;
+                    ($taskModel->editTask($taskId, $name, $email, $task, $status, $edited)) ? $this->setData(compact('successMessage', 'formAction', 'user'))
+                        : $this->setData(compact('dbErrorMessage', 'formAction', 'user'));
+                }
+            } else {
+                $this->redirect('login');
             }
         }
     }

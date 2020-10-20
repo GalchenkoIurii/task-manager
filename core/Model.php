@@ -18,6 +18,14 @@ abstract class Model
         $this->db = $dbInstance->getDbConnection();
     }
 
+    public function getItem($id)
+    {
+        $query = "SELECT * FROM $this->table WHERE id = :id";
+        $statement = $this->db->prepare($query);
+        $statement->execute([':id' => $id]);
+        return $statement->fetch(\PDO::FETCH_ASSOC);
+    }
+
     public function getItems($offset, $limit)
     {
         $query = "SELECT * FROM $this->table LIMIT $offset, $limit";

@@ -10,6 +10,8 @@ Router::addRoute('^logout$', ['controller' => 'Main',
 
 Router::addRoute('^add$', ['controller' => 'Main',
     'action' => 'add']);
+Router::addRoute('^edit$', ['controller' => 'Main',
+    'action' => 'edit']);
 
 //Router::addRoute('^admin$', ['controller' => 'Main',
 //    'action' => 'index', 'prefix' => 'admin']);
