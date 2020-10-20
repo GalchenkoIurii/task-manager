@@ -18,7 +18,6 @@ class Pagination
         $this->pagesCount = $this->getPagesCount();
         $this->currentPage = $this->getCurrentPage($page);
         $this->uri = $this->getQueryParams();
-        var_dump($this->uri);
     }
 
     public function __toString()

@@ -21,7 +21,17 @@ abstract class Model
     public function getItems($offset, $limit)
     {
         $query = "SELECT * FROM $this->table LIMIT $offset, $limit";
-        return $this->db->query($query)->fetchAll();
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getSortedItems($offset, $limit, $orderBy, $order = 'ASC')
+    {
+        $query = "SELECT * FROM $this->table ORDER BY $orderBy $order LIMIT $offset, $limit";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function getTotalItemsCount()

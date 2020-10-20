@@ -1,4 +1,43 @@
  <div class="container">
+     <?php if (isset($pagination->currentPage)) {
+         $currentPage = 'page=' . $pagination->currentPage . '&';
+     }?>
+     <div class="row mb-5 justify-content-center align-items-center">
+         <span class="align-bottom mr-5">Сортировать:</span>
+         <div class="btn-group mr-5">
+             <button type="button" class="btn btn-primary">По имени</button>
+             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <span class="sr-only">Toggle Dropdown</span>
+             </button>
+             <div class="dropdown-menu">
+                 <a class="dropdown-item" href="?<?= $currentPage; ?>sort=nameasc">По возрастанию</a>
+                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="?<?= $currentPage; ?>sort=namedesc">По убыванию</a>
+             </div>
+         </div>
+         <div class="btn-group mr-5">
+             <button type="button" class="btn btn-primary">По email</button>
+             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <span class="sr-only">Toggle Dropdown</span>
+             </button>
+             <div class="dropdown-menu">
+                 <a class="dropdown-item" href="?<?= $currentPage; ?>sort=emailasc">По возрастанию</a>
+                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="?<?= $currentPage; ?>sort=emaildesc">По убыванию</a>
+             </div>
+         </div>
+         <div class="btn-group">
+             <button type="button" class="btn btn-primary">По статусу</button>
+             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <span class="sr-only">Toggle Dropdown</span>
+             </button>
+             <div class="dropdown-menu">
+                 <a class="dropdown-item" href="?<?= $currentPage; ?>sort=statusasc">По возрастанию</a>
+                 <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="?<?= $currentPage; ?>sort=statusdesc">По убыванию</a>
+             </div>
+         </div>
+     </div>
         <div class="row mb-5">
             <div class="card-deck">
                 <?php foreach ($tasks as $task) { ?>

@@ -16,11 +16,38 @@ class MainController extends Controller
         $taskModel = new TaskModel();
 
         $page = isset($_GET['page']) ? (int)htmlspecialchars($_GET['page']) : 1;
-        $itemsPerPage = 3;
+        $itemsPerPage = ITEMS_PER_PAGE;
         $tasksCount = (int)$taskModel->getTotalItemsCount();
         $pagination = new Pagination($itemsPerPage, $tasksCount, $page);
         $startPage = $pagination->getStart();
-        $tasks = $taskModel->getItems($startPage, $itemsPerPage);
+
+        if (isset($_GET['sort'])) {
+            $sort = htmlspecialchars($_GET['sort']);
+            switch ($sort) {
+                case 'nameasc':
+                    $tasks = $taskModel->getSortedItems($startPage, $itemsPerPage, 'user_name');
+                    break;
+                case 'namedesc':
+                    $tasks = $taskModel->getSortedItems($startPage, $itemsPerPage, 'user_name', 'DESC');
+                    break;
+                case 'emailasc':
+                    $tasks = $taskModel->getSortedItems($startPage, $itemsPerPage, 'user_email');
+                    break;
+                case 'emaildesc':
+                    $tasks = $taskModel->getSortedItems($startPage, $itemsPerPage, 'user_email', 'DESC');
+                    break;
+                case 'statusasc':
+                    $tasks = $taskModel->getSortedItems($startPage, $itemsPerPage, 'status');
+                    break;
+                case 'statusdesc':
+                    $tasks = $taskModel->getSortedItems($startPage, $itemsPerPage, 'status', 'DESC');
+                    break;
+                default:
+                    $tasks = $taskModel->getItems($startPage, $itemsPerPage);
+            }
+        } else {
+            $tasks = $taskModel->getItems($startPage, $itemsPerPage);
+        }
 
         $this->setMeta('Home page | Task manager', 'Task manager app', 'task, manager');
         $this->setData(compact('tasks', 'pagination', 'user'));

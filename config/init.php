@@ -11,5 +11,7 @@ $app_path = str_replace('/public/', '', $app_path);
 define("PATH", $app_path);
 define("ADMIN", PATH . '/admin');
 
+define("ITEMS_PER_PAGE", 3);
+
 require_once ROOT . '/vendor/autoload.php';
 require_once CONFIG . '/routes.php';
